@@ -1,4 +1,4 @@
-<div id="chatbot" class="fixed bottom-5 right-5 z-50" x-data="{ open: false }">
+<div id="chatbot" class="fixed bottom-15 right-5 z-50" x-data="{ open: false }">
     <div class="bg-white rounded-xl shadow-xl w-80 max-h-96 overflow-hidden transition-all duration-300 transform" 
          :class="open ? 'scale-100 opacity-100' : 'scale-95 opacity-0'" 
          x-show="open" 

@@ -5,11 +5,8 @@
                 <p class="text-gray-600">&copy; {{ date('Y') }} BookShelf</p>
             </div>
             <div class="flex space-x-4">
-                <a href="#" class="text-gray-500 hover:text-indigo-600 transition duration-150">
+                <a href="{{url ('https://github.com/ramanjan9ra/BookShelf/tree/main')}}" class="text-gray-500 hover:text-indigo-600 transition duration-150">
                     <i class="fab fa-github"></i>
-                </a>
-                <a href="#" class="text-gray-500 hover:text-indigo-600 transition duration-150">
-                    <i class="fab fa-twitter"></i>
                 </a>
             </div>
         </div>

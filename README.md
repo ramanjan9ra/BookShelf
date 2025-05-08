@@ -37,6 +37,7 @@ cd bookshelf
 
 ```bash
 composer install
+npm install
 ```
 
 ### 3. Environment setup
@@ -70,6 +71,7 @@ php artisan db:seed
 
 ```bash
 php artisan serve
+npm run dev
 ```
 
 The application will be available at http://localhost:8000

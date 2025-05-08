@@ -6,6 +6,7 @@ use App\Http\Requests\StoreAuthorRequest;
 use App\Http\Requests\UpdateAuthorRequest;
 use App\Models\Author;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AuthorController extends Controller
@@ -13,9 +14,19 @@ class AuthorController extends Controller
     /**
      * Display a listing of the authors.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $authors = Author::withCount('books')->paginate(10);
+        $query = Author::withCount('books');
+        
+        if ($request->has('search') && $request->search != '') {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('email', 'like', '%' . $searchTerm . '%');
+            });
+        }
+        
+        $authors = $query->paginate(10)->withQueryString();
         return view('authors.index', compact('authors'));
     }
 

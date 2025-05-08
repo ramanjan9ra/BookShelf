@@ -17,3 +17,4 @@ Route::resource('books', BookController::class);
 
 // Chatbot API route
 Route::post('/chatbot', [ChatbotController::class, 'processQuery']);
+Route::post('/chatbot/query', [App\Http\Controllers\ChatbotController::class, 'processQuery']);

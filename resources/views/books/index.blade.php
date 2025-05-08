@@ -7,12 +7,21 @@
             <h1 class="text-3xl font-bold text-gray-800 mb-1">Books</h1>
             <p class="text-gray-500">Manage and explore your book collection</p>
         </div>
-        <div class="relative">
+        <form action="{{ route('books.index') }}" method="GET" class="relative mb-4 md:mb-0 md:mx-4 w-full md:w-96 lg:w-[32rem]">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <i class="fas fa-search text-gray-400"></i>
             </div>
-            <input type="text" placeholder="Search books..." class="pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-purple-500 focus:border-purple-500">
-        </div>
+            <input type="text" name="search" placeholder="Search books..." value="{{ request('search') }}" 
+                class="pl-10 pr-20 py-2 border border-gray-200 rounded-lg focus:ring-purple-500 focus:border-purple-500 w-full">
+            @if(request('search'))
+                <button type="submit" name="search" value="" class="absolute inset-y-0 right-20 flex items-center text-gray-500 hover:text-gray-700" title="Clear search">
+                    <i class="fas fa-times"></i>
+                </button>
+            @endif
+            <button type="submit" class="absolute inset-y-0 right-0 px-3 flex items-center bg-purple-600 hover:bg-purple-700 text-white rounded-r-lg">
+                Search
+            </button>
+        </form>
         <a href="{{ route('books.create') }}" class="inline-flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg shadow-sm transition duration-150 ease-in-out">
             <i class="fas fa-plus mr-2"></i>
             Add New Book

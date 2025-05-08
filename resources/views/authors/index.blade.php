@@ -19,12 +19,21 @@
     <h2 class="text-xl font-semibold text-gray-800 flex items-center">
         <i class="fas fa-users text-indigo-600 mr-2"></i> All Authors
     </h2>
-    <div class="relative w-64">
-        <input type="text" id="authorSearch" class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" placeholder="Search authors...">
+    <form action="{{ route('authors.index') }}" method="GET" class="relative w-64">
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <i class="fas fa-search text-gray-400 text-sm"></i>
         </div>
-    </div>
+        <input type="text" name="search" placeholder="Search authors..." value="{{ request('search') }}" 
+               class="w-full pl-9 pr-16 py-2 border border-gray-200 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+        @if(request('search'))
+            <button type="submit" name="search" value="" class="absolute inset-y-0 right-18 flex items-center text-gray-500 hover:text-gray-700 px-2" title="Clear search">
+                <i class="fas fa-times"></i>
+            </button>
+        @endif
+        <button type="submit" class="absolute inset-y-0 right-0 px-3 flex items-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-r-lg">
+            Search
+        </button>
+    </form>
 </div>
 
 <div class="divide-y divide-gray-100">

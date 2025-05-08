@@ -94,23 +94,52 @@
                 appendMessage(message, true);
                 chatInput.value = '';
                 
-                // Simulate response (you can replace this with actual AJAX call)
-                setTimeout(() => {
-                    let response;
-                    const lcMessage = message.toLowerCase();
-                    
-                    if (lcMessage.includes('how many authors')) {
-                        response = "We have several talented authors in our collection. You can view them all in the Authors section!";
-                    } else if (lcMessage.includes('how many books')) {
-                        response = "Our collection includes multiple books across various genres. Check out the Books section to see them all!";
-                    } else if (lcMessage.includes('top 5 authors') || lcMessage.includes('list top 5')) {
-                        response = "Here are some of our popular authors: Jane Austen, Gabriel García Márquez, Haruki Murakami, and more!";
-                    } else {
-                        response = "I'm not sure how to answer that. Try asking about our authors or books collection!";
+                // Show typing indicator
+                const typingIndicator = document.createElement('div');
+                typingIndicator.id = 'typing-indicator';
+                typingIndicator.className = 'flex items-start';
+                typingIndicator.innerHTML = `
+                    <div class="flex-shrink-0 bg-indigo-100 rounded-full p-2 mr-3">
+                        <i class="fas fa-robot text-indigo-600"></i>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg p-3 max-w-[85%]">
+                        <p class="text-gray-800 text-sm">Thinking<span class="typing-dots">...</span></p>
+                    </div>
+                `;
+                chatMessages.appendChild(typingIndicator);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Make AJAX call to ChatbotController
+                fetch('/chatbot/query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ query: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Remove typing indicator
+                    const typingIndicator = document.getElementById('typing-indicator');
+                    if (typingIndicator) {
+                        typingIndicator.remove();
                     }
                     
-                    appendMessage(response);
-                }, 1000);
+                    // Display response from server
+                    appendMessage(data.answer);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    
+                    // Remove typing indicator
+                    const typingIndicator = document.getElementById('typing-indicator');
+                    if (typingIndicator) {
+                        typingIndicator.remove();
+                    }
+                    
+                    appendMessage("Sorry, I'm having trouble connecting right now. Please try again later.");
+                });
             }
         }
         
@@ -122,4 +151,16 @@
         });
     });
 </script>
+
+<style>
+    .typing-dots {
+        animation: typingDots 1.5s infinite;
+    }
+    
+    @keyframes typingDots {
+        0%, 20% { content: "."; }
+        40% { content: ".."; }
+        60%, 100% { content: "..."; }
+    }
+</style>
 @endpush

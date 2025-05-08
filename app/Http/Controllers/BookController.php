@@ -16,7 +16,18 @@ class BookController extends Controller
      */
     public function index(): View
     {
-        $books = Book::with('author')->paginate(10);
+        $search = request('search');
+        
+        $books = Book::query()
+            ->when($search, function($query, $search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('isbn', 'like', "%{$search}%")
+                    ->orWhereHas('author', function($query) use ($search) {
+                        $query->where('name', 'like', "%{$search}%");
+                    });
+            })
+            ->paginate(12);
+        
         return view('books.index', compact('books'));
     }
 

@@ -41,7 +41,7 @@
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Need Help?</h2>
         <p class="text-gray-600 mb-3">Use our chatbot to get quick information about authors and books!</p>
         <p class="text-gray-500 text-sm mb-4">Try asking: "How many authors are there?" or "List top 5 authors."</p>
-        <button onclick="document.querySelector('#chatbot button').click()" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-medium text-gray-700 hover:bg-gray-50 transition shadow-sm">
+        <button onclick="document.querySelector('#chatbot > button:last-child').click()" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-medium text-gray-700 hover:bg-gray-50 transition shadow-sm">
             <i class="fas fa-comment-dots mr-2 text-indigo-500"></i>
             Open Chat
         </button>
